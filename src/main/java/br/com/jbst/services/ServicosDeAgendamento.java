@@ -12,9 +12,11 @@ import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.stereotype.Service;
 
 import br.com.jbst.DTO2.GetAgendamentoDTO;
-import br.com.jbst.DTO2.PostAgendamentosDTO;
+import br.com.jbst.DTO2.PostAgendamentoFuncionarioDTO;
 import br.com.jbst.DTO2.PutAgendamentoDTO;
+import br.com.jbst.entities.Agenda;
 import br.com.jbst.entities.Agendamento;
+import br.com.jbst.entities.Funcionario;
 import br.com.jbst.repositories.modulo1.IAgendaRepository;
 import br.com.jbst.repositories.modulo1.IAgendamentoRepository;
 import br.com.jbst.repositories.modulo2.IFuncionarioRepository;
@@ -38,32 +40,41 @@ public class ServicosDeAgendamento {
 	@Autowired
 	IPessoaFisicaRepository pessoaFisicaRepository;
 
-	public GetAgendamentoDTO criarAgendamento(PostAgendamentosDTO dto) {
-		// Gerar um novo UUID para a agenda
-		UUID idAgendamento = UUID.randomUUID();
+	public GetAgendamentoDTO criarAgendamento(PostAgendamentoFuncionarioDTO dto) {
+	    // Verificar se os IDs são válidos
+	    if (dto.getIdAgenda() == null || dto.getIdFuncionario() == null) {
+	        throw new IllegalArgumentException("ID da agenda ou ID do funcionário não pode ser nulo.");
+	    }
 
-		// Gerar automaticamente o número da agenda
-		Integer numeroagendamento = gerarNumeroAgendamento();
+	    // Gerar um novo UUID para a agenda
+	    UUID idAgendamento = UUID.randomUUID();
 
-		// Obter a data e hora atual
+	    // Gerar automaticamente o número da agenda
+	    Integer numeroAgendamento = gerarNumeroAgendamento();
 
-		// Mapear os dados do DTO para a entidade Agenda
-		Agendamento agendamento = modelMapper.map(dto, Agendamento.class);
+	    // Mapear os dados do DTO para a entidade Agendamento
+	    Agendamento agendamento = modelMapper.map(dto, Agendamento.class);
 
-		// Configurar os campos gerados automaticamente
-		agendamento.setIdAgendamento(UUID.randomUUID());
-		agendamento.setNumeroagendamento(numeroagendamento);
-		int NumeroAgendamento = gerarNumeroAgendamento();
-		agendamento.setNumeroagendamento(numeroagendamento);
-		agendamento.setAgenda(agendaRepository.findById(dto.getIdAgenda()).orElse(null));
-		agendamento.setFuncionario(funcionarioRepository.findById(dto.getIdFuncionario()).orElse(null));
-		agendamento.setPessoafisica(pessoaFisicaRepository.findById(dto.getIdpessoafisica()).orElse(null));
+	    // Configurar os campos gerados automaticamente
+	    agendamento.setIdAgendamento(idAgendamento);
+	    agendamento.setNumeroagendamento(numeroAgendamento);
 
-		// Salvar a nova agenda no banco de dados
-		Agendamento agendamentos = agendamentoRepository.save(agendamento);
-		// Mapear a entidade agenda para o DTO de resposta
-		return modelMapper.map(agendamentos, GetAgendamentoDTO.class);
+	    // Buscar e configurar a agenda e o funcionário
+	    Agenda agenda = agendaRepository.findById(dto.getIdAgenda())
+	                    .orElseThrow(() -> new IllegalArgumentException("Agenda não encontrada para o ID fornecido."));
+	    Funcionario funcionario = funcionarioRepository.findById(dto.getIdFuncionario())
+	                    .orElseThrow(() -> new IllegalArgumentException("Funcionário não encontrado para o ID fornecido."));
+	    
+	    agendamento.setAgenda(agenda);
+	    agendamento.setFuncionario(funcionario);
+
+	    // Salvar a nova agenda no banco de dados
+	    Agendamento agendamentos = agendamentoRepository.save(agendamento);
+
+	    // Mapear a entidade agenda para o DTO de resposta
+	    return modelMapper.map(agendamentos, GetAgendamentoDTO.class);
 	}
+
 
 	private Integer gerarNumeroAgendamento() {
 		Integer ultimoNumero = agendamentoRepository.findMaxNumeroAgendamento();
@@ -90,8 +101,6 @@ public class ServicosDeAgendamento {
 
 		// Mapear os dados do DTO para o agendamento existente
 		modelMapper.map(dto, agendamentoExistente);
-		agendamentoExistente.setPessoafisica(pessoaFisicaRepository.findById(dto.getIdpessoafisica()).orElse(null));
-		agendamentoExistente.setFuncionario(funcionarioRepository.findById(dto.getIdFuncionario()).orElse(null));
 
 		// Salvar as alterações no banco de dados
 		Agendamento agendamentoAtualizado = agendamentoRepository.save(agendamentoExistente);

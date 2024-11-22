@@ -2,6 +2,7 @@ package br.com.jbst.Controllers;
 
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,5 +66,12 @@ public class EmpresaController {
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
+    }
+    
+    @GetMapping("/busca-por-cnpj/{cnpj}")
+    public ResponseEntity<GetAllEmpresaDTO> buscarEmpresaPorCnpj(@PathVariable String cnpj) {
+        Optional<GetAllEmpresaDTO> empresaDTO = empresaServices.buscarEmpresaPorCnpj(cnpj);
+        return empresaDTO.map(ResponseEntity::ok)
+                         .orElseGet(() -> ResponseEntity.notFound().build());
     }
 }

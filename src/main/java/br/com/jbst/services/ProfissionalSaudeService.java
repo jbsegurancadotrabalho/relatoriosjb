@@ -37,10 +37,7 @@ public class ProfissionalSaudeService {
 	    profissionalsaude.setId_profissionalsaude(UUID.randomUUID());
 	    profissionalsaude.setDataHoraCriacao(Instant.now());
 	    
-	    // Verificar se o ID do endereço foi fornecido e, se sim, buscar o endereço correspondente
-	    if (dto.getIdEndereco() != null) {
-	        profissionalsaude.setEndereco(ienderecoRepository.findById(dto.getIdEndereco()).orElse(null));
-	    }
+	
 
 	    // Verificar se o ID do credenciado foi fornecido e, se sim, buscar o credenciado correspondente
 	    if (dto.getIdCredenciado() != null) {
@@ -65,20 +62,6 @@ public class ProfissionalSaudeService {
 
 	    // Atualizando os campos com os dados do DTO
 	    modelMapper.map(dto, profissionalsaude);
-
-	    // Verificar se o ID do endereço foi fornecido e, se sim, buscar o endereço correspondente
-	    if (dto.getIdEndereco() != null) {
-	        profissionalsaude.setEndereco(ienderecoRepository.findById(dto.getIdEndereco()).orElse(null));
-	    } else {
-	        profissionalsaude.setEndereco(null); // Define como nulo se o ID do endereço não foi fornecido
-	    }
-
-	    // Verificar se o ID do credenciado foi fornecido e, se sim, buscar o credenciado correspondente
-	    if (dto.getIdCredenciado() != null) {
-	        profissionalsaude.setCredenciados(icredenciadoRepository.findById(dto.getIdCredenciado()).orElse(null));
-	    } else {
-	        profissionalsaude.setCredenciados(null); // Define como nulo se o ID do credenciado não foi fornecido
-	    }
 
 	    // Salvando as alterações no banco de dados
 	    profissionalsaude = iprofissionalSaudeRepository.save(profissionalsaude);

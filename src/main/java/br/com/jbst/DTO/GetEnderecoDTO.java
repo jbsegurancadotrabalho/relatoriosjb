@@ -3,6 +3,7 @@ package br.com.jbst.DTO;
 import java.time.Instant;
 import java.util.UUID;
 
+import br.com.jbst.DTO2.GetCredenciadosDTO;
 import lombok.Data;
 
 

@@ -15,6 +15,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.jbst.DTO1.GetCredenciados3DTO;
+import br.com.jbst.DTO1.GetCredenciados4DTO;
+import br.com.jbst.DTO2.GetCredenciados1DTO;
+import br.com.jbst.DTO2.GetCredenciados2DTO;
 import br.com.jbst.DTO2.GetCredenciadosDTO;
 import br.com.jbst.DTO2.PostCredenciadosDTO;
 import br.com.jbst.DTO2.PutCredenciadosDTO;
@@ -26,6 +30,8 @@ public class CredenciadosController {
 
     @Autowired
     private CredenciadoService credenciadoService;
+    
+  
 
     @PostMapping
     public ResponseEntity<GetCredenciadosDTO> criarCredenciados(@RequestBody PostCredenciadosDTO dto) {
@@ -48,9 +54,9 @@ public class CredenciadosController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<GetCredenciadosDTO> buscarPorId(@PathVariable UUID id) {
+    public ResponseEntity<GetCredenciados1DTO> buscarPorId(@PathVariable UUID id) {
         try {
-            GetCredenciadosDTO credenciado = credenciadoService.buscarPorId(id);
+            GetCredenciados1DTO credenciado = credenciadoService.buscarPorId(id);
             return ResponseEntity.ok(credenciado);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
@@ -61,6 +67,47 @@ public class CredenciadosController {
     public ResponseEntity<List<GetCredenciadosDTO>> buscarTodosCredenciados() {
         try {
             List<GetCredenciadosDTO> credenciados = credenciadoService.buscarTodosCredenciados();
+            return ResponseEntity.ok(credenciados);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+    
+
+    @GetMapping("/credenciados1")
+    public ResponseEntity<List<GetCredenciados1DTO>> buscarTodosCredenciados1() {
+        try {
+            List<GetCredenciados1DTO> credenciados = credenciadoService.buscarTodosCredenciados1();
+            return ResponseEntity.ok(credenciados);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+
+    @GetMapping("/credenciados2")
+    public ResponseEntity<List<GetCredenciados2DTO>> buscarTodosCredenciados2() {
+        try {
+            List<GetCredenciados2DTO> credenciados = credenciadoService.buscarTodosCredenciados2	();
+            return ResponseEntity.ok(credenciados);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+    
+    @GetMapping("/credenciados3")
+    public ResponseEntity<List<GetCredenciados3DTO>> buscarTodosCredenciados3() {
+        try {
+            List<GetCredenciados3DTO> credenciados = credenciadoService.buscarTodosCredenciados3	();
+            return ResponseEntity.ok(credenciados);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+    
+    @GetMapping("/4")
+    public ResponseEntity<List<GetCredenciados4DTO>> buscarTodosCredenciados4() {
+        try {
+            List<GetCredenciados4DTO> credenciados = credenciadoService.buscarTodosCredenciados4	();
             return ResponseEntity.ok(credenciados);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);

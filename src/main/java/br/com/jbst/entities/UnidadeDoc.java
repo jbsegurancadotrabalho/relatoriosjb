@@ -80,8 +80,7 @@ public class UnidadeDoc {
 	@OneToOne(mappedBy = "unidadedoc")
 	private Recomendacoes recomendacoes;
 
-	@OneToOne(mappedBy = "unidadedoc")
-	private Apresentacao apresentacao;
+	
 
 	@OneToOne(mappedBy = "unidadedoc")
 	private Conclusao conclusao;

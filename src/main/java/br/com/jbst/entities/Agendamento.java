@@ -1,12 +1,17 @@
 package br.com.jbst.entities;
 
+import java.util.List;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
@@ -40,17 +45,20 @@ public class Agendamento {
     private Integer numeroagendamento;
     
     @ManyToOne
-    @JoinColumn(name = "id_pessoafisica")	
+    @JoinColumn(name = "id_pessoafisica", nullable = true)	
 	private PessoaFisica pessoafisica;	
 	
 	@ManyToOne
-	@JoinColumn(name = "id_funcionario")
+	@JoinColumn(name = "id_funcionario", nullable = true)
 	private Funcionario funcionario;
 	
-
-	
+    @JsonBackReference
 	@OneToOne
-	@JoinColumn(name = "id_agenda")
+	@JoinColumn(name = "id_agenda", unique = true) // Adicione a restrição de unicidade aqui
 	private Agenda agenda;
+    
+    @OneToMany(mappedBy = "agendamento", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Atendimento> atendimento;
+
 	
 }

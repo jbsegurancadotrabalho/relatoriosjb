@@ -2,16 +2,24 @@ package br.com.jbst.Controllers;
 
 
 import java.util.List;
-
-
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
+import br.com.jbst.DTO1.GetAgenda1DTO;
+import br.com.jbst.DTO1.GetAgenda2DTO;
+import br.com.jbst.DTO1.GetAgenda3DTO;
 import br.com.jbst.DTO2.GetAgendaDTO;
 import br.com.jbst.DTO2.PostAgendaDTO;
 import br.com.jbst.DTO2.PutAgendaDTO;
@@ -24,10 +32,10 @@ public class AgendaController {
     @Autowired
     private AgendaService agendaService;
 
-    @PutMapping
-    public ResponseEntity<GetAgendaDTO> criarAgenda(@RequestBody PostAgendaDTO dto) {
+    @PostMapping
+    public ResponseEntity<GetAgenda3DTO> criarAgenda(@RequestBody PostAgendaDTO dto) {
         try {
-            GetAgendaDTO novaAgenda = agendaService.criarAgenda(dto);
+            GetAgenda3DTO novaAgenda = agendaService.criarAgenda(dto);
             return new ResponseEntity<>(novaAgenda, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -35,9 +43,9 @@ public class AgendaController {
     }
 
     @PutMapping("/editar")
-    public ResponseEntity<GetAgendaDTO> editarAgenda(@RequestBody PutAgendaDTO putAgendaDTO) {
+    public ResponseEntity<GetAgenda3DTO> editarAgenda(@RequestBody PutAgendaDTO putAgendaDTO) {
         try {
-            GetAgendaDTO agendaAtualizada = agendaService.editarAgenda(putAgendaDTO);
+            GetAgenda3DTO agendaAtualizada = agendaService.editarAgenda(putAgendaDTO);
             return ResponseEntity.ok(agendaAtualizada);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(null); // Bad request if ID is not provided
@@ -48,20 +56,38 @@ public class AgendaController {
     
 
     @GetMapping("/{id}")
-    public ResponseEntity<GetAgendaDTO> consultarAgendaPorId(@PathVariable UUID id) {
+    public ResponseEntity<GetAgenda3DTO> consultarAgendaPorId(@PathVariable UUID id) {
         try {
-            GetAgendaDTO agendaDTO = agendaService.consultarAgendaPorId(id);
+            GetAgenda3DTO agendaDTO = agendaService.consultarAgendaPorId(id);
             return ResponseEntity.ok(agendaDTO);
         } catch (NotFoundException e) {
             return ResponseEntity.notFound().build();
         }
     }
 
-    @GetMapping("/todas")
+    @GetMapping("/0")
 	public ResponseEntity<List<GetAgendaDTO>> buscarTodasAsAgendas() {
         List<GetAgendaDTO> agendas = agendaService.buscarTodasAsAgendas();
         return ResponseEntity.ok(agendas);
     }
+    
+    @GetMapping("/1")
+ 	public ResponseEntity<List<GetAgenda1DTO>> buscarTodasAsAgendas1() {
+         List<GetAgenda1DTO> agendas = agendaService.buscarTodasAsAgendas1();
+         return ResponseEntity.ok(agendas);
+     }
+    
+    @GetMapping("/2")
+ 	public ResponseEntity<List<GetAgenda2DTO>> buscarTodasAsAgendas2() {
+         List<GetAgenda2DTO> agendas = agendaService.buscarTodasAsAgendas2();
+         return ResponseEntity.ok(agendas);
+     }
+    
+    @GetMapping("/3")
+ 	public ResponseEntity<List<GetAgenda3DTO>> buscarTodasAsAgendas3() {
+         List<GetAgenda3DTO> agendas = agendaService.buscarTodasAsAgendas3();
+         return ResponseEntity.ok(agendas);
+     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> excluirAgendaPorId(@PathVariable UUID id) {

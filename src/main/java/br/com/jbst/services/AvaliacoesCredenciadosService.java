@@ -56,7 +56,6 @@ public class AvaliacoesCredenciadosService {
         
         // Atualizando as associações com outras entidades
         avaliacoesCredenciados.setAvaliacoes(avaliacoesRepository.findById(dto.getIdAvaliacoes()).orElse(null));
-        avaliacoesCredenciados.setCredenciados(icredenciadoRepository.findById(dto.getIdCredenciado()).orElse(null));
         
         // Salvando as alterações no banco de dados
         avaliacoesCredenciados = iavaliacoesCredenciadosRepository.save(avaliacoesCredenciados);

@@ -15,10 +15,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.jbst.DTO2.GetAgendamentoDTO;
-import br.com.jbst.DTO2.PostAgendamentoDTO;
+import br.com.jbst.DTO2.GetAgendamentoPessoaFisicaDTO;
+import br.com.jbst.DTO2.PostAgendamentoFuncionarioDTO;
+import br.com.jbst.DTO2.PostAgendamentoPessoaFisicaDTO;
 import br.com.jbst.DTO2.PutAgendamentoDTO;
 import br.com.jbst.services.AgendamentoServices;
 
@@ -29,11 +32,39 @@ public class AgendamentoController {
     @Autowired
   AgendamentoServices agendamentoServices;
 
+ 
+   
+   @GetMapping("/funcionarios")
+   public ResponseEntity<List<GetAgendamentoDTO>> consultarAgendamentoFuncionariosPorMesAno(
+           @RequestParam("mes") int mes,
+           @RequestParam("ano") int ano) {
+
+       List<GetAgendamentoDTO> agendamentos = agendamentoServices.consultarAgendamentoFuncionariosPorMesAno(mes, ano);
+       return ResponseEntity.ok(agendamentos);
+   }
+	 
+   @GetMapping("/pessoafisica")
+   public ResponseEntity<List<GetAgendamentoPessoaFisicaDTO>> consultarAgendamentoPessoaFisicaPorMesAno(
+           @RequestParam("mes") int mes,
+           @RequestParam("ano") int ano) {
+
+       List<GetAgendamentoPessoaFisicaDTO> agendamentos = agendamentoServices.consultarAgendamentoPessoaFisicaPorMesAno(mes, ano);
+       return ResponseEntity.ok(agendamentos);
+   }
+
+    
     @PostMapping
-    public ResponseEntity<GetAgendamentoDTO> criarAgendamento(@RequestBody PostAgendamentoDTO dto) {
-        GetAgendamentoDTO agendamentoDTO = agendamentoServices.criarAgendamento(dto);
+    public ResponseEntity<GetAgendamentoDTO> criarAgendamento(@RequestBody PostAgendamentoFuncionarioDTO dto) {
+        GetAgendamentoDTO agendamentoDTO = agendamentoServices.criarAgendamentoFuncionario(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(agendamentoDTO);
     }
+    
+    @PostMapping("/pessoafisica")
+    public ResponseEntity<GetAgendamentoDTO> criarAgendamentoPessoaFisica(@RequestBody PostAgendamentoPessoaFisicaDTO dto) {
+        GetAgendamentoDTO agendamentoDTO = agendamentoServices.criarAgendamentoPessoaFisica(dto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(agendamentoDTO);
+    }
+
 
     @PutMapping
     public ResponseEntity<GetAgendamentoDTO> editarAgendamento(@RequestBody PutAgendamentoDTO dto) {

@@ -50,8 +50,6 @@ public class FormacaoSaudeService {
 		        // Atualizando os campos com os dados do DTO
 		        modelMapper.map(dto, formacaoSaude);
 		        
-		        // Atualizando as associações com outras entidades
-				formacaoSaude.setProfissionalsaude(iprofissionalSaudeRepository.findById(dto.getId_profissionalsaude()).orElse(null));
 		        
 		        // Salvando as alterações no banco de dados
 				formacaoSaude = iformacaoRepository.save(formacaoSaude);

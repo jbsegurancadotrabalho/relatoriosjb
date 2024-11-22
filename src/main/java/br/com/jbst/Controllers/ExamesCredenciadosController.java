@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.jbst.DTO1.GetExamesCredenciados1DTO;
+import br.com.jbst.DTO1.GetExamesCredenciados2DTO;
+import br.com.jbst.DTO1.GetExamesCredenciados4DTO;
 import br.com.jbst.DTO2.GetExamesCredenciadosDTO;
 import br.com.jbst.DTO2.PostExamesCredenciadosDTO;
 import br.com.jbst.DTO2.PutExamesCredenciadosDTO;
@@ -45,9 +48,27 @@ public class ExamesCredenciadosController {
         return ResponseEntity.ok(examesCredenciadosDTO);
     }
 
-    @GetMapping
+    @GetMapping("/1")
     public ResponseEntity<List<GetExamesCredenciadosDTO>> buscarTodosExamesCredenciados() {
         List<GetExamesCredenciadosDTO> examesCredenciadosDTOList = examesCredenciadosService.buscarTodosExamesCredenciados();
+        return ResponseEntity.ok(examesCredenciadosDTOList);
+    }
+    
+    @GetMapping("/2")
+    public ResponseEntity<List<GetExamesCredenciados2DTO>> buscarTodosExamesCredenciados2() {
+        List<GetExamesCredenciados2DTO> examesCredenciadosDTOList = examesCredenciadosService.buscarTodosExamesCredenciados2();
+        return ResponseEntity.ok(examesCredenciadosDTOList);
+    }
+    
+    @GetMapping("/4")
+    public ResponseEntity<List<GetExamesCredenciados4DTO>> buscarTodosExamesCredenciados4() {
+        List<GetExamesCredenciados4DTO> examesCredenciadosDTOList = examesCredenciadosService.buscarTodosExamesCredenciados4();
+        return ResponseEntity.ok(examesCredenciadosDTOList);
+    }
+    
+    @GetMapping
+    public ResponseEntity<List<GetExamesCredenciados1DTO>> buscarTodosExamesCredenciados1() {
+        List<GetExamesCredenciados1DTO> examesCredenciadosDTOList = examesCredenciadosService.buscarTodosExamesCredenciados1();
         return ResponseEntity.ok(examesCredenciadosDTOList);
     }
 

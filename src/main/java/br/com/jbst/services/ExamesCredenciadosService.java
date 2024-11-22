@@ -8,13 +8,12 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.jbst.DTO2.GetCursos_CredenciadosDTO;
+import br.com.jbst.DTO1.GetExamesCredenciados1DTO;
+import br.com.jbst.DTO1.GetExamesCredenciados2DTO;
+import br.com.jbst.DTO1.GetExamesCredenciados4DTO;
 import br.com.jbst.DTO2.GetExamesCredenciadosDTO;
-import br.com.jbst.DTO2.PostCursos_CredenciadosDTO;
 import br.com.jbst.DTO2.PostExamesCredenciadosDTO;
-import br.com.jbst.DTO2.PutCursos_CredenciadosDTO;
 import br.com.jbst.DTO2.PutExamesCredenciadosDTO;
-import br.com.jbst.entities.Cursos_Credenciados;
 import br.com.jbst.entities.ExamesCredenciados;
 import br.com.jbst.repositories.modulo1.ICredenciadosRepository;
 import br.com.jbst.repositories.modulo1.IExamesCredenciadosRepository;
@@ -57,7 +56,6 @@ public class ExamesCredenciadosService {
 	        
 	        // Atualizando as associações com outras entidades
 	        examescredenciados.setExames(ixameRepository.findById(dto.getIdExames()).orElse(null));
-	        examescredenciados.setCredenciados(icredenciadoRepository.findById(dto.getIdCredenciado()).orElse(null));
 	        
 	        // Salvando as alterações no banco de dados
 	        examescredenciados = iexamesCredenciadosRepository.save(examescredenciados);
@@ -70,6 +68,27 @@ public class ExamesCredenciadosService {
 	        List<ExamesCredenciados> examesCredenciadosList = iexamesCredenciadosRepository.findAll();
 	        return examesCredenciadosList.stream()
 	                .map(c -> modelMapper.map(c, GetExamesCredenciadosDTO.class))
+	                .collect(Collectors.toList());
+	    }
+	    
+	    public List<GetExamesCredenciados1DTO> buscarTodosExamesCredenciados1() {
+	        List<ExamesCredenciados> examesCredenciadosList = iexamesCredenciadosRepository.findAll();
+	        return examesCredenciadosList.stream()
+	                .map(c -> modelMapper.map(c, GetExamesCredenciados1DTO.class))
+	                .collect(Collectors.toList());
+	    }
+	    
+	    public List<GetExamesCredenciados2DTO> buscarTodosExamesCredenciados2() {
+	        List<ExamesCredenciados> examesCredenciadosList = iexamesCredenciadosRepository.findAll();
+	        return examesCredenciadosList.stream()
+	                .map(c -> modelMapper.map(c, GetExamesCredenciados2DTO.class))
+	                .collect(Collectors.toList());
+	    }
+	    
+	    public List<GetExamesCredenciados4DTO> buscarTodosExamesCredenciados4() {
+	        List<ExamesCredenciados> examesCredenciadosList = iexamesCredenciadosRepository.findAll();
+	        return examesCredenciadosList.stream()
+	                .map(c -> modelMapper.map(c, GetExamesCredenciados4DTO.class))
 	                .collect(Collectors.toList());
 	    }
 

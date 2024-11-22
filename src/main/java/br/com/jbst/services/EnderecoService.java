@@ -2,7 +2,6 @@ package br.com.jbst.services;
 
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -10,8 +9,10 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.jbst.DTO.GetBairroDTO;
 import br.com.jbst.DTO.GetEnderecoDTO;
-
+import br.com.jbst.DTO.GetEnderecoLocalidadesDTO;
+import br.com.jbst.DTO.GetEnderecoUfDTO;
 import br.com.jbst.entities.Endereco;
 import br.com.jbst.repositories.modulo1.IEnderecoEntityRepository;
 import br.com.jbst.repositories.modulo1.IEnderecoRepository;
@@ -42,5 +43,16 @@ public class EnderecoService {
 		return modelMapper.map(endereco, GetEnderecoDTO.class);
 	}
 	
-	
+	 public List<GetEnderecoUfDTO> getAllUf() {
+	        return ienderecoRepository.findDistinctUf();
+	    }
+	 
+	 public List<GetEnderecoLocalidadesDTO> getDistinctLocalidades() {
+	        return ienderecoRepository.findDistinctLocalidades();
+	    }
+	 
+	 public List<GetBairroDTO> getDistinctBairros() {
+	        return ienderecoRepository.findDistinctBairros();
+	    }
+	 
 }

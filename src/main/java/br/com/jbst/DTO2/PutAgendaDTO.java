@@ -9,8 +9,7 @@ import lombok.Data;
 public class PutAgendaDTO {
 	private UUID idAgenda;
 	private Instant dia_hora;
+	private String status;
 	private String observacoes_agenda;
-	private UUID idExameCredenciado;
-	private UUID id_profissionalsaude;
-	private UUID idCredenciado;
+
 }

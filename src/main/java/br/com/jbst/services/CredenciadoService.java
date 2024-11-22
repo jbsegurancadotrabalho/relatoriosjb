@@ -10,12 +10,16 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.jbst.repositories.modulo1.ICredenciadosRepository;
-import br.com.jbst.repositories.modulo1.IEnderecoRepository;
+import br.com.jbst.DTO1.GetCredenciados3DTO;
+import br.com.jbst.DTO1.GetCredenciados4DTO;
+import br.com.jbst.DTO2.GetCredenciados1DTO;
+import br.com.jbst.DTO2.GetCredenciados2DTO;
 import br.com.jbst.DTO2.GetCredenciadosDTO;
 import br.com.jbst.DTO2.PostCredenciadosDTO;
 import br.com.jbst.DTO2.PutCredenciadosDTO;
 import br.com.jbst.entities.Credenciados;
+import br.com.jbst.repositories.modulo1.ICredenciadosRepository;
+import br.com.jbst.repositories.modulo1.IEnderecoRepository;
 
 @Service
 public class CredenciadoService {
@@ -82,11 +86,11 @@ public class CredenciadoService {
         }
     }
 	
-	public GetCredenciadosDTO buscarPorId(UUID id) throws Exception {
+	public GetCredenciados1DTO buscarPorId(UUID id) throws Exception {
         try {
             Optional<Credenciados> credenciadosOptional = icredenciadoRepository.findById(id);
             if (credenciadosOptional.isPresent()) {
-                return modelMapper.map(credenciadosOptional.get(), GetCredenciadosDTO.class);
+                return modelMapper.map(credenciadosOptional.get(), GetCredenciados1DTO.class);
             } else {
                 throw new IllegalArgumentException("Credenciado não encontrado");
             }
@@ -106,6 +110,52 @@ public class CredenciadoService {
         }
     }
     
+    
+    
+    public List<GetCredenciados2DTO> buscarTodosCredenciados2() throws Exception {
+        try {
+            List<Credenciados> credenciadosList = icredenciadoRepository.findAll();
+            return credenciadosList.stream()
+                    .map(credenciados -> modelMapper.map(credenciados, GetCredenciados2DTO.class))
+                    .collect(Collectors.toList());
+        } catch (Exception e) {
+            throw new Exception("Erro ao buscar todos os credenciados: " + e.getMessage());
+        }
+    }
+    
+    public List<GetCredenciados3DTO> buscarTodosCredenciados3() throws Exception {
+        try {
+            List<Credenciados> credenciadosList = icredenciadoRepository.findAll();
+            return credenciadosList.stream()
+                    .map(credenciados -> modelMapper.map(credenciados, GetCredenciados3DTO.class))
+                    .collect(Collectors.toList());
+        } catch (Exception e) {
+            throw new Exception("Erro ao buscar todos os credenciados: " + e.getMessage());
+        }
+    }
+    
+    public List<GetCredenciados4DTO> buscarTodosCredenciados4() throws Exception {
+        try {
+            List<Credenciados> credenciadosList = icredenciadoRepository.findAll();
+            return credenciadosList.stream()
+                    .map(credenciados -> modelMapper.map(credenciados, GetCredenciados4DTO.class))
+                    .collect(Collectors.toList());
+        } catch (Exception e) {
+            throw new Exception("Erro ao buscar todos os credenciados: " + e.getMessage());
+        }
+    }
+    
+    public List<GetCredenciados1DTO> buscarTodosCredenciados1() throws Exception {
+        try {
+            List<Credenciados> credenciadosList = icredenciadoRepository.findAll();
+            return credenciadosList.stream()
+                    .map(credenciados -> modelMapper.map(credenciados, GetCredenciados1DTO.class))
+                    .collect(Collectors.toList());
+        } catch (Exception e) {
+            throw new Exception("Erro ao buscar todos os credenciados: " + e.getMessage());
+        }
+    }
+    
     public void deletarCredenciados(UUID id) throws Exception {
         try {
             icredenciadoRepository.deleteById(id);
@@ -113,5 +163,8 @@ public class CredenciadoService {
             throw new Exception("Erro ao deletar credenciados: " + e.getMessage());
         }
     }
+    
+
+
 }
 

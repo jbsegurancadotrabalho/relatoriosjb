@@ -11,5 +11,4 @@ public class PutFormacaoSaudeDTO {
 	private String conselho;
 	private String registro;
 	private String estado;
-	private UUID id_profissionalsaude;
 }

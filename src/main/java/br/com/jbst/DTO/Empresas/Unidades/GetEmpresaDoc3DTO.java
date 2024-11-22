@@ -3,6 +3,7 @@ package br.com.jbst.DTO.Empresas.Unidades;
 import java.util.List;
 import java.util.UUID;
 
+import br.com.jbst.DTO.GetCnaeDto;
 import lombok.Data;
 
 @Data

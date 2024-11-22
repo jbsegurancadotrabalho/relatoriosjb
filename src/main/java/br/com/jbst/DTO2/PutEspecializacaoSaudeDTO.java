@@ -9,5 +9,4 @@ public class PutEspecializacaoSaudeDTO {
 	private UUID idEspecializacaoSaude;
 	private String nomeEspecializacaoSaude;
 	private String descricaoEspecializacao;
-	private UUID idFormacaoSaude;
 }

@@ -1,5 +1,6 @@
 package br.com.jbst.DTO2;
 
+import java.util.List;
 import java.util.UUID;
 
 import lombok.Data;
@@ -16,5 +17,6 @@ public class GetProfissionalSaudeDTO {
 	private String telefone_2;
 	private String email;
 	private String senha_sistema;
+	private List<GetFormacaoSaudeDTO> formacaosaude;
 	
 }

@@ -12,5 +12,4 @@ public class PutCursos_CredenciadosDTO {
 	private String valorCredenciado;
 	private String valorJB;
 	private UUID idcurso;
-	private UUID idCredenciado;	
 }

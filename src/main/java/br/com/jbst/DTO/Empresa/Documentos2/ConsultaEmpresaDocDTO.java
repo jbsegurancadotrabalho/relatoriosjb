@@ -21,5 +21,6 @@ public class ConsultaEmpresaDocDTO {
 	private String email_usuario;
 	private String senha_sistema;
 	private String telefone_responsavel;
+	private List<GetCnaeDto> cnaes;
    private ConsultaEmpresaDTO empresa;
 }

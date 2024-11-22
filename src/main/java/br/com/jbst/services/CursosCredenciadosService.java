@@ -56,7 +56,6 @@ public class CursosCredenciadosService {
         
         // Atualizando as associações com outras entidades
         cursoCredenciado.setCurso(icursosRepository.findById(dto.getIdcurso()).orElse(null));
-        cursoCredenciado.setCredenciados(icredenciadoRepository.findById(dto.getIdCredenciado()).orElse(null));
         
         // Salvando as alterações no banco de dados
         cursoCredenciado = icursosCredenciadosRepository.save(cursoCredenciado);

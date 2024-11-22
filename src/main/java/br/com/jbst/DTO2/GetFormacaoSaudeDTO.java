@@ -1,5 +1,6 @@
 package br.com.jbst.DTO2;
 
+import java.util.List;
 import java.util.UUID;
 
 import lombok.Data;
@@ -11,4 +12,5 @@ public class GetFormacaoSaudeDTO {
 	private String conselho;
 	private String registro;
 	private String estado;
+	private List<GetEspecializacaoSaudeDTO> especializacaosaude;
 }

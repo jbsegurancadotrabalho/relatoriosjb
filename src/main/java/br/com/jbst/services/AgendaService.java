@@ -10,11 +10,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.stereotype.Service;
 
+import br.com.jbst.DTO1.GetAgenda1DTO;
+import br.com.jbst.DTO1.GetAgenda2DTO;
+import br.com.jbst.DTO1.GetAgenda3DTO;
 import br.com.jbst.DTO2.GetAgendaDTO;
 import br.com.jbst.DTO2.PostAgendaDTO;
 import br.com.jbst.DTO2.PutAgendaDTO;
 import br.com.jbst.entities.Agenda;
-
 import br.com.jbst.repositories.modulo1.IAgendaRepository;
 import br.com.jbst.repositories.modulo1.ICredenciadosRepository;
 import br.com.jbst.repositories.modulo1.IExamesCredenciadosRepository;
@@ -38,7 +40,7 @@ public class AgendaService {
 	@Autowired
 	private IExamesCredenciadosRepository iexamesCredenciadosRepository;
 
-	public GetAgendaDTO criarAgenda(PostAgendaDTO dto) {
+	public GetAgenda3DTO criarAgenda(PostAgendaDTO dto) {
 	    // Gerar um novo UUID para a agenda
 	    UUID idAgenda = UUID.randomUUID();
 
@@ -61,7 +63,7 @@ public class AgendaService {
 	    Agenda agendas = agendaRepository.save(agenda);
 
 	    // Mapear a entidade agenda para o DTO de resposta
-	    return modelMapper.map(agendas, GetAgendaDTO.class);
+	    return modelMapper.map(agendas, GetAgenda3DTO.class);
 	}
 
 
@@ -73,7 +75,7 @@ public class AgendaService {
 		return ultimoNumero + 1;
 	}
 
-	public GetAgendaDTO editarAgenda(PutAgendaDTO dto) throws Exception {
+	public GetAgenda3DTO editarAgenda(PutAgendaDTO dto) throws Exception {
 		// Verificar se o ID da agenda está presente no DTO
 		if (dto.getIdAgenda() == null) {
 			throw new IllegalArgumentException("O ID da agenda deve ser fornecido para editar a agenda.");
@@ -90,33 +92,46 @@ public class AgendaService {
 
 		// Mapear os dados do DTO para a agenda existente
 		modelMapper.map(dto, agendaExistente);
-		agendaExistente.setCredenciados(icredenciadoRepository.findById(dto.getIdCredenciado()).orElse(null));
-		agendaExistente.setExamescredenciados(
-				iexamesCredenciadosRepository.findById(dto.getIdExameCredenciado()).orElse(null));
-		agendaExistente.setProfissionalsaude(
-				iprofissionalSaudeRepository.findById(dto.getId_profissionalsaude()).orElse(null));
-
+	
 		// Salvar as alterações no banco de dados
 		Agenda agendaAtualizada = agendaRepository.save(agendaExistente);
 
 		// Mapear a agenda atualizada para o DTO de resposta
-		return modelMapper.map(agendaAtualizada, GetAgendaDTO.class);
+		return modelMapper.map(agendaAtualizada, GetAgenda3DTO.class);
 	}
 
-	public GetAgendaDTO consultarAgendaPorId(UUID idAgenda) throws NotFoundException {
+	public GetAgenda3DTO consultarAgendaPorId(UUID idAgenda) throws NotFoundException {
 		Optional<Agenda> agendaOptional = agendaRepository.findById(idAgenda);
 		if (agendaOptional.isPresent()) {
 			Agenda agenda = agendaOptional.get();
-			return modelMapper.map(agenda, GetAgendaDTO.class);
+			return modelMapper.map(agenda, GetAgenda3DTO.class);
 		} else {
 			throw new NotFoundException();
 		}
 	}
 
+	
+	// Método para buscar todas as agendas
+		public List<GetAgenda3DTO> buscarTodasAsAgendas3() {
+			List<Agenda> agendas = agendaRepository.findAll();
+			return agendas.stream().map(agenda -> modelMapper.map(agenda, GetAgenda3DTO.class)).collect(Collectors.toList());
+		}
+	
 	// Método para buscar todas as agendas
 	public List<GetAgendaDTO> buscarTodasAsAgendas() {
 		List<Agenda> agendas = agendaRepository.findAll();
 		return agendas.stream().map(agenda -> modelMapper.map(agenda, GetAgendaDTO.class)).collect(Collectors.toList());
+	}
+	
+	// Método para buscar todas as agendas
+	public List<GetAgenda1DTO> buscarTodasAsAgendas1() {
+		List<Agenda> agendas = agendaRepository.findAll();
+		return agendas.stream().map(agenda -> modelMapper.map(agenda, GetAgenda1DTO.class)).collect(Collectors.toList());
+	}
+	
+	public List<GetAgenda2DTO> buscarTodasAsAgendas2() {
+		List<Agenda> agendas = agendaRepository.findAll();
+		return agendas.stream().map(agenda -> modelMapper.map(agenda, GetAgenda2DTO.class)).collect(Collectors.toList());
 	}
 	
 	 public void excluirAgendaPorId(UUID idAgenda) throws NotFoundException {

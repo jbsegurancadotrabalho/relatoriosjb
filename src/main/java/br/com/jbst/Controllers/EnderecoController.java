@@ -7,19 +7,16 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.jbst.DTO.GetBairroDTO;
 import br.com.jbst.DTO.GetEnderecoDTO;
-import br.com.jbst.DTO.PostEnderecoDTO;
-import br.com.jbst.DTO.PutEnderecoDTO;
+import br.com.jbst.DTO.GetEnderecoLocalidadesDTO;
+import br.com.jbst.DTO.GetEnderecoUfDTO;
 import br.com.jbst.services.EnderecoService;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 
 @RestController
 @RequestMapping("/enderecos")
@@ -28,6 +25,21 @@ public class EnderecoController {
     @Autowired
     private EnderecoService enderecoService;
     
+    
+    @GetMapping("/ufs")
+    public List<GetEnderecoUfDTO> getAllUf() {
+        return enderecoService.getAllUf();
+    }
+    
+    @GetMapping("/localidades")
+    public List<GetEnderecoLocalidadesDTO> getDistinctLocalidades() {
+        return enderecoService.getDistinctLocalidades();
+    }
+    
+    @GetMapping("/bairros")
+    public List<GetBairroDTO> getDistinctBairros() {
+        return enderecoService.getDistinctBairros();
+    }
 
     @GetMapping
     public ResponseEntity<List<GetEnderecoDTO>> buscarTodosEnderecos() {

@@ -14,5 +14,4 @@ public class PostProfissionalSaudeDTO {
 	private String email;
 	private String senha_sistema;
 	private UUID idCredenciado;	
-    private UUID idEndereco;
 }

@@ -3,7 +3,9 @@ package br.com.jbst.entities;
 import java.time.Instant;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -34,14 +36,19 @@ public class Agenda {
     @Column(name = "observacoes", length = 500, nullable = true)
     private String observacoes_agenda;
     
-	@OneToOne
+    @Column(name = "status", length = 50, nullable = true)
+    private String status;
+    
+	@ManyToOne
 	@JoinColumn(name = "id_examescredenciados")
 	private ExamesCredenciados examescredenciados;
 
-	@OneToOne(mappedBy = "agenda")
+    @JsonIgnore
+	@OneToOne(mappedBy = "agenda", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Agendamento agendamento;
 
-	@OneToOne
+
+	@ManyToOne
 	@JoinColumn(name = "id_profissionalsaude")
 	private ProfissionalSaude profissionalsaude;
 

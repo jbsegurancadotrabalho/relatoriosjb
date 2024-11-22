@@ -4,8 +4,8 @@ import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import br.com.jbst.entities.Apresentacao;
+import br.com.jbst.entities.Participante;
 
-public interface IApresentacaoRepository extends JpaRepository <Apresentacao, UUID>{
+public interface IParticipanteRepository extends JpaRepository<Participante, UUID> {
 
 }

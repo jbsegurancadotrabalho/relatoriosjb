@@ -43,13 +43,12 @@ public class EspecializacaoSaudeService {
 
 	        // Recuperar o objeto AvaliacoesCredenciados com base no ID fornecido
 	        EspecializacaoSaude especializacaoSaude = iespecializacaoSaudeRepository.findById(dto.getIdEspecializacaoSaude())
-	                .orElseThrow(() -> new RuntimeException("Especialização não encontrada com id: " + dto.getIdFormacaoSaude()));
+	                .orElseThrow(() -> new RuntimeException("Especialização não encontrada com id: " ));
 
 	        // Atualizando os campos com os dados do DTO
 	        modelMapper.map(dto, especializacaoSaude);
 	        
 	        // Atualizando as associações com outras entidades
-	        especializacaoSaude.setFormacaosaude(iformacaoSaudeRepository.findById(dto.getIdFormacaoSaude()).orElse(null));
 	        
 	        // Salvando as alterações no banco de dados
 	        especializacaoSaude = iespecializacaoSaudeRepository.save(especializacaoSaude);

@@ -11,5 +11,4 @@ public class PutExamesCredenciadosDTO {
 	private String valorCredenciado;
 	private String valorJb;
 	private UUID idExames;
-	private UUID idCredenciado;	
 }

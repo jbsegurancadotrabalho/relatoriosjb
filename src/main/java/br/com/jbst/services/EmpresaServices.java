@@ -58,5 +58,10 @@ public class EmpresaServices {
     		List<Empresa> empresa = empresaRepository.findAll();
     		return empresa.stream().map(empresas -> modelMapper.map(empresas, GetEmpresa1DTO.class)).collect(Collectors.toList());
     	}
+        
+        public Optional<GetAllEmpresaDTO> buscarEmpresaPorCnpj(String cnpj) {
+            Optional<Empresa> empresaOptional = empresaRepository.findByCnpj(cnpj);
+            return empresaOptional.map(empresa -> modelMapper.map(empresa, GetAllEmpresaDTO.class));
+        }
 
 }

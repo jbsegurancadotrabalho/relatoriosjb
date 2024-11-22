@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.jbst.DTO.GetFuncaoDocDTO;
@@ -81,7 +82,18 @@ public class FuncaoDocController {
     }
  
     
-    
+    @GetMapping("/buscar")
+    public ResponseEntity<GetFuncaoDoc1DTO> getByFuncao(@RequestParam String funcaoNome) {
+        try {
+            GetFuncaoDoc1DTO funcaoDto = funcaoDocServices.getByFuncao(funcaoNome);
+            return ResponseEntity.ok(funcaoDto);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(null); // Retorna 400 se não encontrar a função
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(500).body(null); // Retorna 500 em caso de erro inesperado
+        }
+    }
     
 }
 

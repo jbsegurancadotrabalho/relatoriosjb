@@ -42,6 +42,9 @@ public class FuncaoDocServices {
 
 	@Autowired
 	IFuncaoDocRepository funcaoDocRepository;
+	
+	@Autowired
+	IFuncaoDocEntityRepository IFuncaoDocEntityRepository;
 
 	@Autowired
 	IRiscosRepository iriscosRepository;
@@ -156,7 +159,17 @@ public class FuncaoDocServices {
 			}.getType());
 			return lista;
 		}
-	    
+	  
+	  
+	  public GetFuncaoDoc1DTO getByFuncao(String funcaoNome) throws Exception {
+	        FuncaoDocEntity funcao =  IFuncaoDocEntityRepository.findByFuncaoDoc(funcaoNome);
+
+	        if (funcao == null) {
+	            throw new IllegalArgumentException("Função não encontrada: " + funcaoNome);
+	        }
+
+	        return modelMapper.map(funcao, GetFuncaoDoc1DTO.class);
+	    }
 	
 
 }

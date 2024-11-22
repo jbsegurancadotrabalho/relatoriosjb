@@ -49,6 +49,13 @@ public class FuncionarioServices {
             throw new RuntimeException("Funcionário não encontrado para o ID: " + id);
         }
     }
+    
+    public List<GetFuncionarioDTO1> buscarFuncionariosPorEmpresaECPF(UUID idEmpresa, String cpf) {
+        List<Funcionario> funcionarios = funcionarioRepository.findByEmpresa_idEmpresaAndCpf(idEmpresa, cpf);
+        return funcionarios.stream()
+                .map(funcionario -> modelMapper.map(funcionario, GetFuncionarioDTO1.class))
+                .collect(Collectors.toList());
+    }
 
 
 }

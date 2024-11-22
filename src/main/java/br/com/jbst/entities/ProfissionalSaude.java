@@ -68,8 +68,8 @@ public class ProfissionalSaude {
 	@OneToMany(mappedBy = "profissionalsaude") 
 	private List<FormacaoSaude> formacaosaude;
 	
-	@OneToOne (mappedBy= "profissionalsaude")
-	private Agenda agenda;
+	@OneToMany (mappedBy= "profissionalsaude")
+	private List<Agenda> agenda;
 	
 	@OneToOne
 	@JoinColumn(name = "id_endereco", nullable = true)
